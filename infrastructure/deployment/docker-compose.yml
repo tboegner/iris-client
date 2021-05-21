@@ -33,6 +33,8 @@ services:
       timeout: 3s
       retries: 4
       start_period: 30s
+    depends_on:
+      - logger
 
   # IRIS Client backend for frontend
   iris-client:
@@ -112,6 +114,8 @@ services:
     environment:
       - PROXY_SETTINGS=settings/dev/roles/private-proxy-1
     command: [ "--level", "trace", "run", "private" ]
+    depends_on:
+      - logger
 
   private-proxy-1:
     image: luckylusa/iris-eps-bundle:latest
@@ -122,6 +126,8 @@ services:
     environment:
       - EPS_SETTINGS=settings/dev/roles/private-proxy-eps-1
     command: [ "--level", "trace", "server", "run" ]
+    depends_on:
+      - logger
 
 
   internal-server:
@@ -132,6 +138,32 @@ services:
       - 8888
     entrypoint: ./internal-server
     command: [ "--level", "trace" ]
+    depends_on:
+      - logger
+
+  logger:
+    image: umputun/docker-logger
+    restart: always
+    
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    
+    environment:
+      - LOG_FILES=true
+      - LOG_SYSLOG=false
+      - EXCLUDE=deployment_logger_1
+      - MAX_FILES=10
+      - MAX_SIZE=50
+      - MAX_AGE=28
+      - DEBUG=false
+#      - TIME_ZONE=Europe/Berlin
+    
+    volumes:
+      - ${LOG_FOLDER}:/srv/logs
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   psqldata_iris:
