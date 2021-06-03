@@ -36,16 +36,16 @@
 
       <v-card-text>
         <p>
-          IRIS connect wurde unter dem Dach des Innovationsverbunds Öffentliche
-          Gesundheit (InÖG) initiiert und mit der Open-Source Community
-          entwickelt. Hauptsponsor und Partner hinter IRIS connect ist die Björn
-          Steiger Stiftung, die auch für den verlässlichen Verfahrensbetrieb
+          IRIS connect wurde unter dem Dach des <a href="https://inoeg.de"
+              >Innovationsverbunds Öffentliche Gesundheit (InÖG)</a> initiiert und mit der Open-Source Community
+          entwickelt. Hauptsponsor und Partner hinter IRIS connect ist die <a href="https://steiger-stiftung.de"
+              >Björn Steiger Stiftung</a>, die auch für den verlässlichen Verfahrensbetrieb
           verantwortlich ist.
         </p>
         <p>
-          Bei Fragen und Problemen kontaktieren Sie bitte Ihre IT-koordinierende
+          <em>Bei Fragen und Problemen kontaktieren Sie bitte Ihre IT-koordinierende
           Stelle, um technische Probleme an den Support des Betreibers
-          weiterzuleiten. Vielen Dank!
+          weiterzuleiten. Vielen Dank!</em>
         </p>
       </v-card-text>
 
