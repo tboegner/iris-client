@@ -10,10 +10,10 @@ echo "version = $VERSION"
 COMMIT=$2
 
 printf "\n  Build NGINX image  \n\n"
-docker build -t inoeg/iris-client-nginx ./infrastructure/docker/nginx/
+docker build -t tboegner/iris-client-nginx ./infrastructure/docker/nginx/
 
 printf "\n  Build FE image  \n\n"
-docker build -t inoeg/iris-client-frontend ./iris-client-fe/
+docker build -t tboegner/iris-client-frontend ./iris-client-fe/
 
 printf "\n  Set version to POMs and build BFF image and JAR  \n\n"
 # Set new version in pom.xml using mvn versions:set command
