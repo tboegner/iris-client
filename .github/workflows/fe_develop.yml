@@ -20,6 +20,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_PW }}
-          repository: inoeg/iris-client-frontend
+          repository: tboegner/iris-client-frontend
           tag_with_ref: true
           path: ./iris-client-fe/

@@ -18,3 +18,6 @@ security.jwt.jwt-shared-secret=thissecretshouldbeusedfortestingpurposesonly
 ```
 
 Using this setting, the authentication is activated for all calls towards the client need to be authorized.
+
+The Readme was changed to trigger workflow.
+
