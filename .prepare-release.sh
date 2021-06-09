@@ -13,14 +13,14 @@ echo "version = $VERSION"
 COMMIT=$2
 
 printf "\n  Build NGINX image  \n\n"
-docker build -t inoeg/iris-client-nginx ./infrastructure/docker/nginx/
+docker build -t tboegner/iris-client-nginx ./infrastructure/docker/nginx/
 
 docker tag genty/iris-client-nginx genty/iris-client-nginx:$VERSION
 docker tag genty/iris-client-nginx genty/iris-client-nginx:$MAJOR
 docker tag genty/iris-client-nginx genty/iris-client-nginx:$MAJOR.$MINOR
 
 printf "\n  Build FE image  \n\n"
-docker build -t inoeg/iris-client-frontend ./iris-client-fe/
+docker build -t tboegner/iris-client-frontend ./iris-client-fe/
 
 docker tag genty/iris-client-frontend genty/iris-client-frontend:$VERSION
 docker tag genty/iris-client-frontend genty/iris-client-frontend:$MAJOR

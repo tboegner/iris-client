@@ -1,5 +1,5 @@
 {
-     "repositoryUrl": "https://github.com/iris-connect/iris-client.git",
+     "repositoryUrl": "https://github.com/tboegner/iris-client.git",
      "branches": ["+([0-9])?(.{+([0-9]),x}).x", "main", "next", "next-major", {"name": "release", "prerelease": "rc"}],
      "debug": "true",
      "plugins": [
@@ -18,8 +18,8 @@
 	        	"replacements": [
 	          		{
 	            		"files": ["infrastructure/deployment/docker-compose-ext-postgres.yml", "infrastructure/deployment/docker-compose.yml"],
-	            		"from": "inoeg/(iris-client.*):.*",
-	            		"to": "inoeg/$1:${nextRelease.version.split('.').slice(0,2).join('.')}",
+	            		"from": "tboegner/(iris-client.*):.*",
+	            		"to": "tboegner/$1:${nextRelease.version.split('.').slice(0,2).join('.')}",
 	            		"countMatches": true
 	          		}
 	        	]
