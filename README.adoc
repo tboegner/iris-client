@@ -132,6 +132,8 @@ Object someMethod(…) {
 }
 ----
 
+Happy coding!
+
 ==== Sonarlint
 
 As further support, use https://www.sonarlint.org/[SonarLint] to avoid code smells. We don't currently use any fixed rules here, but Sonarlint gives useful hints during development.
@@ -143,3 +145,4 @@ As further support, use https://www.sonarlint.org/[SonarLint] to avoid code smel
 == License
 
 Currently this code is licensed under Affero GPL 3.0.
+

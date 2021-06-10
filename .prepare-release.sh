@@ -11,20 +11,21 @@ echo "version = $VERSION"
 
 # expect commit sha as second parameter
 COMMIT=$2
+REGISTRY_BASE="tboegner" 
 
 printf "\n  Build NGINX image  \n\n"
-docker build -t tboegner/iris-client-nginx ./infrastructure/docker/nginx/
+docker build -t $REGISTRY_BASE/iris-client-nginx ./infrastructure/docker/nginx/
 
-docker tag genty/iris-client-nginx genty/iris-client-nginx:$VERSION
-docker tag genty/iris-client-nginx genty/iris-client-nginx:$MAJOR
-docker tag genty/iris-client-nginx genty/iris-client-nginx:$MAJOR.$MINOR
+docker tag $REGISTRY_BASE/iris-client-nginx $REGISTRY_BASE/iris-client-nginx:$VERSION
+docker tag $REGISTRY_BASE/iris-client-nginx $REGISTRY_BASE/iris-client-nginx:$MAJOR
+docker tag $REGISTRY_BASE/iris-client-nginx $REGISTRY_BASE/iris-client-nginx:$MAJOR.$MINOR
 
 printf "\n  Build FE image  \n\n"
-docker build -t tboegner/iris-client-frontend ./iris-client-fe/
+docker build -t $REGISTRY_BASE/iris-client-frontend ./iris-client-fe/
 
-docker tag genty/iris-client-frontend genty/iris-client-frontend:$VERSION
-docker tag genty/iris-client-frontend genty/iris-client-frontend:$MAJOR
-docker tag genty/iris-client-frontend genty/iris-client-frontend:$MAJOR.$MINOR
+docker tag $REGISTRY_BASE/iris-client-frontend $REGISTRY_BASE/iris-client-frontend:$VERSION
+docker tag $REGISTRY_BASE/iris-client-frontend $REGISTRY_BASE/iris-client-frontend:$MAJOR
+docker tag $REGISTRY_BASE/iris-client-frontend $REGISTRY_BASE/iris-client-frontend:$MAJOR.$MINOR
 
 printf "\n  Set version to POMs and build BFF image and JAR  \n\n"
 # Set new version in pom.xml using mvn versions:set command
@@ -35,15 +36,14 @@ mvn versions:set -DnewVersion=$VERSION -DprocessAllModules=true
 mvn -B clean package spring-boot:repackage spring-boot:build-image -Dspring-boot.build-image.publish=false
 mkdir release && cp ./iris-client-bff/target/*.jar release
 
-
 # Generate third-party dependencies for BFF and move them to root
 # File will be uploaded to github by @semantic-release/github
 mvn -B license:aggregate-add-third-party
 mv ./target/generated-sources/license/THIRD-PARTY.txt ./BFF-THIRD-PARTY-LICENSES.md
 
-docker tag genty/iris-client-bff:$VERSION genty/iris-client-bff:latest
-docker tag genty/iris-client-bff:$VERSION genty/iris-client-bff:$MAJOR
-docker tag genty/iris-client-bff:$VERSION genty/iris-client-bff:$MAJOR.$MINOR
+docker tag $REGISTRY_BASE/iris-client-bff:$VERSION $REGISTRY_BASE/iris-client-bff:latest
+docker tag $REGISTRY_BASE/iris-client-bff:$VERSION $REGISTRY_BASE/iris-client-bff:$MAJOR
+docker tag $REGISTRY_BASE/iris-client-bff:$VERSION $REGISTRY_BASE/iris-client-bff:$MAJOR.$MINOR
 
 
 # Set new version with prefix in pom.xml to avoid accidentally overwriting the release images in Docker.io after the merge back into develop.
@@ -74,20 +74,20 @@ cd ../../
 
 printf "\n  Push images and tags to docker registry  \n\n"
 
-docker push genty/iris-client-bff:$VERSION
-docker push genty/iris-client-bff:latest
-docker push genty/iris-client-bff:$MAJOR
-docker push genty/iris-client-bff:$MAJOR.$MINOR
+docker push $REGISTRY_BASE/iris-client-bff:$VERSION
+docker push $REGISTRY_BASE/iris-client-bff:latest
+docker push $REGISTRY_BASE/iris-client-bff:$MAJOR
+docker push $REGISTRY_BASE/iris-client-bff:$MAJOR.$MINOR
 
-docker push genty/iris-client-frontend:$VERSION
-docker push genty/iris-client-frontend:latest
-docker push genty/iris-client-frontend:$MAJOR
-docker push genty/iris-client-frontend:$MAJOR.$MINOR
+docker push $REGISTRY_BASE/iris-client-frontend:$VERSION
+docker push $REGISTRY_BASE/iris-client-frontend:latest
+docker push $REGISTRY_BASE/iris-client-frontend:$MAJOR
+docker push $REGISTRY_BASE/iris-client-frontend:$MAJOR.$MINOR
 
-docker push genty/iris-client-nginx:$VERSION
-docker push genty/iris-client-nginx:latest
-docker push genty/iris-client-nginx:$MAJOR
-docker push genty/iris-client-nginx:$MAJOR.$MINOR
+docker push $REGISTRY_BASE/iris-client-nginx:$VERSION
+docker push $REGISTRY_BASE/iris-client-nginx:latest
+docker push $REGISTRY_BASE/iris-client-nginx:$MAJOR
+docker push $REGISTRY_BASE/iris-client-nginx:$MAJOR.$MINOR
 
 printf "\n  COMPLETED: Build components and prepare release  \n\n"
 
