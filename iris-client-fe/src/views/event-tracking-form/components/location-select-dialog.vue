@@ -65,6 +65,10 @@ import { DataQuery, getSortAttribute } from "@/api/common";
 import { DataOptions } from "node_modules/vuetify/types";
 
 const getFormattedAddress = (address: LocationAddress): string => {
+  if(address == null) {
+    return null;  
+  }
+
   const { street, zip, city } = address;
   return join([street, zip, city], ", ");
 };
