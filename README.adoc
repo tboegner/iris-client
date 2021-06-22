@@ -132,7 +132,7 @@ Object someMethod(…) {
 }
 ----
 
-Happy coding!
+Happy coding and have fun!
 
 ==== Sonarlint
 
