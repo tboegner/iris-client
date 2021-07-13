@@ -1,0 +1,11 @@
+name: Test Workflow
+
+on: [push]
+
+jobs:
+  testdocker:
+    runs-on: ubuntu-20.04
+    
+    steps:
+      - name: Show docker version
+        run: docker --version
