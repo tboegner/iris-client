@@ -44,7 +44,12 @@ jobs:
           IMAGE_REPO=$(docker image ls --format "{{.Repository}}")
           IMAGE_TAG=$(docker image ls --format "{{.Tag}}")
           TARGET_IMG=${IMAGE_REPO}:dev
-          docker tag ${IMAGE_REPO}:{$IMAGE_TAG} $TARGET_IMG
+          echo repo: ${IMAGE_REPO}
+          echo tag: ${IMAGE_TAG}
+          echo target: $TARGET_IMG
+          docker tag tboegner/iris-client-bff:develop tboegner/iris-client-bff:test
+          docker push tboegner/iris-client-bff:test
+          docker tag ${IMAGE_REPO}:${IMAGE_TAG} $TARGET_IMG
           docker push $TARGET_IMG
         env:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
