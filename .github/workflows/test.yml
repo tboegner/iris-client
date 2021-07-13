@@ -35,7 +35,7 @@ jobs:
             VERSION=pr-${{ github.event.number }}
           fi
           echo ::set-output name=version::${VERSION}
-          DOCKER_VER=docker --version
+          DOCKER_VER=$(docker --version)
           echo $DOCKER_VER
     
 #      - name: build, package and publish the image
