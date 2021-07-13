@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2.3.4
+      - name: Checkout code
+        uses: actions/checkout@v2.3.4
     
-#      - name: Cache local Maven repository
-#        uses: actions/cache@v2.1.6
-#        with:
-#          path: ~/.m2/repository
-#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#          restore-keys: |
-#            ${{ runner.os }}-maven-
+      - name: Cache local Maven repository
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
     
       - name: Get version from GITHUB_REF
         id: get_version
@@ -38,10 +38,14 @@ jobs:
           DOCKER_VER=$(docker --version)
           echo $DOCKER_VER
     
-#      - name: build, package and publish the image
-#        run: |
-#          mvn -B clean package spring-boot:build-image -am -pl iris-client-bff -Dspring-boot.build-image.publish=true -Dversion.tag=${{ steps.get_version.outputs.version }}
-#          IMAGE_REPO=docker image ls --format "{{.Repository}}"
-#        env:
-#          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-#          DOCKER_HUB_PW: ${{ secrets.DOCKER_HUB_PW }}
+      - name: build, package and publish the image
+        run: |
+          mvn -B clean package spring-boot:build-image -am -pl iris-client-bff -Dspring-boot.build-image.publish=true -Dversion.tag=${{ steps.get_version.outputs.version }}
+          IMAGE_REPO=$(docker image ls --format "{{.Repository}}")
+          IMAGE_TAG=$(docker image ls --format "{{.Tag}}")
+          TARGET_IMG=${IMAGE_REPO}:dev
+          docker tag ${IMAGE_REPO}:{$IMAGE_TAG} $TARGET_IMG
+          docker push $TARGET_IMG
+        env:
+          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+          DOCKER_HUB_PW: ${{ secrets.DOCKER_HUB_PW }}
