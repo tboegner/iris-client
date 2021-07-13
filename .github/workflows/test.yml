@@ -53,10 +53,10 @@ jobs:
       - name: Republish with alternate tag
         run: |
           NAMESPACE=tboegner
-          ARITFACT=iris-client-bff
+          ARTIFACT=iris-client-bff
           TAG=dev
           TARGET=${NAMESPACE}/${ARTIFACT}:${TAG}
-          echo target: $TARGET_IMG
+          echo target: $TARGET
           docker tag ${NAMESPACE}/${ARTIFACT}:${{ steps.get_version.outputs.version }} ${TARGET}
           docker push $TARGET
           
