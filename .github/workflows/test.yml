@@ -14,13 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2.3.4
     
-      - name: Cache local Maven repository
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+#      - name: Cache local Maven repository
+#        uses: actions/cache@v2.1.6
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
     
       - name: Get version from GITHUB_REF
         id: get_version
@@ -37,29 +37,7 @@ jobs:
           echo ::set-output name=version::${VERSION}
           DOCKER_VER=$(docker --version)
           echo $DOCKER_VER
+          echo ${{ github.event }}
     
-      - name: build, package and publish the image
-        run: mvn -B clean package spring-boot:build-image -am -pl iris-client-bff -Dspring-boot.build-image.publish=true -Dversion.tag=${{ steps.get_version.outputs.version }}
-        env:
-          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-          DOCKER_HUB_PW: ${{ secrets.DOCKER_HUB_PW }}
-          
-      - name: Login to DockerHub
-        uses: docker/login-action@v1 
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_PW }}
-          
-      - name: Republish with alternate tag
-        run: |
-          NAMESPACE=tboegner
-          ARTIFACT=iris-client-bff
-          TAG=dev
-          TARGET=${NAMESPACE}/${ARTIFACT}:${TAG}
-          echo target: $TARGET
-          docker tag ${NAMESPACE}/${ARTIFACT}:${{ steps.get_version.outputs.version }} ${TARGET}
-          docker push $TARGET
-          
-      
       
 
