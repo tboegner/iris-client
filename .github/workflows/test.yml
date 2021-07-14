@@ -37,7 +37,7 @@ jobs:
           echo ::set-output name=version::${VERSION}
           DOCKER_VER=$(docker --version)
           echo $DOCKER_VER
-          echo ${{ github.event }}
+          echo ${{ github.event.on }}
     
       
 
