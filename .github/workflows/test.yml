@@ -26,8 +26,10 @@ jobs:
         id: get_version
         run: |
           echo $GITHUB_REF
-          STR=inoeg/iris-client-bff:inoeg/iris-client-bff:pr-218
-          echo $STR | cut --delimiter=: --fields=2-3
+          ORG=tboegner
+          REPO=iris-client-bff
+          TAG=1
+          curl -u ${{ secrets.DOCKER_HUB_USER }}:${{ secrets.DOCKER_HUB_PW }} -X "DELETE" https://hub.docker.com/v2/repositories/$ORG/$REPO/tags/$TAG/
           echo ${{ github.event_name }}
 #          VERSION=edge
 #          if [[ $GITHUB_REF == refs/tags/* ]]; then
