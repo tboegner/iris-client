@@ -29,7 +29,7 @@ jobs:
           ORG=tboegner
           REPO=iris-client-bff
           TAG=1
-          curl -u ${{ secrets.DOCKER_HUB_USER }}:${{ secrets.DOCKER_HUB_PW }} -X "DELETE" https://hub.docker.com/v2/repositories/$ORG/$REPO/tags/$TAG/
+          curl -X "GET" https://hub.docker.com/v2/repositories/$ORG/$REPO/tags/1
           echo ${{ github.event_name }}
 #          VERSION=edge
 #          if [[ $GITHUB_REF == refs/tags/* ]]; then
